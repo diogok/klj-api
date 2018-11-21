@@ -1,0 +1,49 @@
+{:paths ["src" "target" "resources"]
+ :deps 
+ {
+  org.clojure/clojure {:mvn/version "1.9.0"} 
+
+  ring {:mvn/version "1.7.0"}
+  bidi {:mvn/version "2.1.4"}
+  http-kit {:mvn/version "2.2.0"}
+
+  environ {:mvn/version "1.1.0"}
+  com.taoensso/timbre {:mvn/version "4.10.0"}
+
+  org.clojure/core.async {:mvn/version "0.4.474"}
+  manifold {:mvn/version "0.1.8"}
+
+  medley {:mvn/version "1.0.0"}
+
+  com.taoensso/sente {:mvn/version "1.13.1"}
+  com.cognitect/transit-clj {:mvn/version "0.8.313"}
+  com.cognitect/transit-cljs {:mvn/version "0.8.256"}
+
+  org.clojure/clojurescript {:mvn/version "1.10.439"}
+
+  hiccup {:mvn/version "1.0.5"} 
+  reagent {:mvn/version "0.8.1"}
+  garden {:mvn/version "1.3.6"}
+ }
+ :aliases {
+   :uberjar {:extra-deps {luchiniatwork/cambada {:mvn/version "1.0.0"}}
+             :main-opts ["-m" "cambada.uberjar" 
+                         "-m" "server.main"]}
+   :nightlight {:extra-deps {nightlight {:mvn/version "2.3.2"}}
+                :main-opts ["-m" "nightlight.core"]}
+   :run {:main-opts ["-m" "server.main"]}
+   :cljs-prod {:main-opts ["-m" "cljs.main"
+                           "--optimizations" "advanced"
+                           "--output-dir" "resources/public/js"
+                           "--compile" "client.main"]}
+   :cljs-dev {:main-opts ["-m" "cljs.main"
+                          "--watch" "src/client"
+                          "--output-dir" "resources/public/js"
+                          "-co" "dev.cljs.edn"
+                          "--compile" "client.main"
+                          ]}
+ }
+ :mvn/repos
+    {"central" {:url "https://repo1.maven.org/maven2/"}
+     "clojars" {:url "https://clojars.org/repo"}}
+}
