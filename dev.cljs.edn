@@ -1,1 +1,1 @@
-{:asset-path "js"} 
+{:output-dir "resources/public/js" :asset-path "js" :optimizations :none} 

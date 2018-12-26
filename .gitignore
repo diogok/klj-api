@@ -5,3 +5,4 @@ pom.xml
 .cpcache
 .nightlight.edn
 resources/public/js
+out

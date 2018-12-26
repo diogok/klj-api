@@ -1,0 +1,1 @@
+{:launch-browser false :watch "src/client" :static-dir "resources/public" :asset-path "js"}

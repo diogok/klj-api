@@ -34,10 +34,17 @@
    :liquid {:extra-deps {mogenslund/liquid {:mvn/version "1.0.0"}}
             :main-opts ["-m" "dk.salza.liq.core"]}
    :run {:main-opts ["-m" "server.main"]}
+   :repl {:main-opts ["--repl"]}
    :cljs-prod {:main-opts ["-m" "cljs.main"
                            "--optimizations" "advanced"
                            "--output-dir" "resources/public/js"
                            "--compile" "client.main"]}
+   :cljs-repl {:main-opts ["-m" "cljs.main"
+                           "-co" "dev.cljs.edn"
+                           "-ro" "repl.cljs.edn"
+                           "--compile" "client.main"
+                           "--repl"
+                          ]}
    :cljs-dev {:main-opts ["-m" "cljs.main"
                           "--watch" "src/client"
                           "--output-dir" "resources/public/js"
