@@ -31,6 +31,8 @@
                          "-m" "server.main"]}
    :nightlight {:extra-deps {nightlight {:mvn/version "2.3.2"}}
                 :main-opts ["-m" "nightlight.core"]}
+   :liquid {:extra-deps {mogenslund/liquid {:mvn/version "1.0.0"}}
+            :main-opts ["-m" "dk.salza.liq.core"]}
    :run {:main-opts ["-m" "server.main"]}
    :cljs-prod {:main-opts ["-m" "cljs.main"
                            "--optimizations" "advanced"
