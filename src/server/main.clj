@@ -3,8 +3,8 @@
             [bidi.ring :refer [make-handler]]
             [ring.util.response :refer [redirect response]]
             [ring.middleware.resource :refer [wrap-resource]]
-            [ring.middleware.content-type :refer [wrap-content-type]]            [ring.middleware.not-modified
-                                                                                  :refer [wrap-not-modified]])            
+            [ring.middleware.content-type :refer [wrap-content-type]]            
+            [ring.middleware.not-modified :refer [wrap-not-modified]])            
   (:use [server.index :reload true])
   
   (:gen-class))
@@ -15,7 +15,7 @@
             :body (page)}))
 
 (def routes
-  (make-handler
+  (make-handler  
     ["/" {"" (fn [_] (redirect "/ui"))
           "ui" (html index)}]))
 
@@ -27,7 +27,3 @@
         (wrap-content-type)      
         (wrap-not-modified))
     {:port 8080}))
-
-
-(def s (main))
-
