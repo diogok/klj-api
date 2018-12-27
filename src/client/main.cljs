@@ -1,15 +1,22 @@
-(ns client.main)
+(ns client.main
+  (:require [reagent.core :as r]))
 
-(defn create-canvas
-  [] (.createElement js/document "canvas"))
+(def ping (r/atom 0))
 
-(defn append-canvas
-  [] (-> js/document
-         (.-body)
-         (.appendChild (create-canvas))))
+(defn ping-component
+  [] [:p (str @ping "ms")])
 
-(defn -main
+(defn render
+  [node] (r/render [ping-component] node))
+
+(defn start
+  [] (render
+       (.appendChild 
+         (.-body js/document)
+         (.createElement js/document "div"))))
+
+(defn main
   []  (set! (.-onload js/window)
-        (fn [_] (append-canvas))))
+        (fn [_] (start))))
 
 
