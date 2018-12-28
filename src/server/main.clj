@@ -4,8 +4,9 @@
             [ring.util.response :refer [redirect response]]
             [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.content-type :refer [wrap-content-type]]            
-            [ring.middleware.not-modified :refer [wrap-not-modified]])            
-  (:use [server.index :reload true])
+            [ring.middleware.not-modified :refer [wrap-not-modified]])
+  (:use [server.index :reload true]
+        [server.socket :reload true])
   
   (:gen-class))
    
@@ -16,10 +17,10 @@
 
 (def routes
   (make-handler  
-    ["/" {"" (fn [_] (redirect "/ui"))
-          "ui" (html index)}]))
+    ["/" {"" (html index)
+          "ws" socket}]))
 
-(defn main
+(defn -main
   [& args] 
   (run-server 
     ( -> #'routes
