@@ -2,11 +2,13 @@
   (:require [org.httpkit.server :refer [run-server]]
             [bidi.ring :refer [make-handler]]
             [ring.util.response :refer [redirect response]]
+            [ring.middleware.reload :refer [wrap-reload]]
             [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.content-type :refer [wrap-content-type]]            
             [ring.middleware.not-modified :refer [wrap-not-modified]])
-  (:use [server.index :reload true]
-        [server.socket :reload true])
+  (:require [taoensso.timbre :as log])
+  (:use [server.index]
+        [server.socket] :reload)
   
   (:gen-class))
    
@@ -22,9 +24,12 @@
 
 (defn -main
   [& args] 
-  (run-server 
-    ( -> #'routes
-        (wrap-resource "public")
-        (wrap-content-type)      
-        (wrap-not-modified))
-    {:port 8080}))
+  (log/spy
+    (run-server 
+      ( -> #'routes
+          (wrap-reload)
+          (wrap-resource "public")
+          (wrap-content-type)      
+          (wrap-not-modified)
+          )
+      {:port 8080})))
