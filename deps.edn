@@ -4,7 +4,7 @@
   org.clojure/clojure {:mvn/version "1.9.0"} 
 
   ring {:mvn/version "1.7.0"} #_"HTTP Abstraction"
-  bidi {:mvn/version "2.1.4"} #_"Routing"
+  metosin/reitit {:mvn/version "0.2.10"} #_"Routing"
   http-kit {:mvn/version "2.3.0"} #_"HTTP Server and Client, incl. websockets"
   hiccup {:mvn/version "1.0.5"}  #_"HTML generation for CLJ"
 

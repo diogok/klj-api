@@ -1,6 +1,6 @@
 (ns server.main
   (:require [org.httpkit.server :refer [run-server]]
-            [bidi.ring :refer [make-handler]]
+            [reitit.ring :as ring]
             [ring.util.response :refer [redirect response]]
             [ring.middleware.reload :refer [wrap-reload]]
             [ring.middleware.resource :refer [wrap-resource]]
@@ -18,9 +18,10 @@
             :body (page)}))
 
 (def routes
-  (make-handler  
-    ["/" {"" (html index)
-          "ws" socket}]))
+  (ring/ring-handler
+    (ring/router
+      [["/" {:get {:handler (html index)}}]
+       ["/ws" {:get {:handler socket}}]])))
 
 (defn -main
   [& args] 
