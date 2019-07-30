@@ -4,7 +4,8 @@
   org.clojure/clojure {:mvn/version "1.10.1"} 
 
   ring/ring-core {:mvn/version "1.7.1"} #_"HTTP Abstraction"
-  ring/ring-devel {:mvn/version "1.7.1"} #_"HTTP Abstraction"
+  ring/ring-devel {:mvn/version "1.7.1"} #_"HTTP Abstraction Dev tools"
+  ring-logger {:mvn/version "1.0.1"} 
 
   metosin/reitit-core {:mvn/version "0.3.9"} #_"Routing core"
   metosin/reitit-ring {:mvn/version "0.3.9"} #_"Routing ring adapter"
@@ -13,6 +14,7 @@
 
   environ {:mvn/version "1.1.0"} #_"Config loading"
   com.taoensso/timbre {:mvn/version "4.10.0"} #_"Logging"
+  cheshire {:mvn/version "5.8.1"} #_"JSON lib dep from timbre"
 
   org.clojure/core.async {:mvn/version "0.4.500"} #_"Async operations"
 

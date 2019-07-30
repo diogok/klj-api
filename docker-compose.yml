@@ -9,4 +9,11 @@ services:
     ports:
       - 8080:8080
     command: clj -A:run
+    environment:
+      LOGSTASH_HOST: fluentbit
+    depends_on:
+      - fluentbit
+
+  fluentbit:
+    image: diogok/fluentbit:stdout-0.0.5
     
