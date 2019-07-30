@@ -15,6 +15,7 @@ Just to keep up to date with current frameworks.
 
 - environ for config
 - timbre for logs
+- log to json udp (logstash style)
 - core.async
 - prometheus metrics
 - opentracing with jaeger

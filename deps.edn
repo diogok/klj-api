@@ -14,15 +14,18 @@
 
   environ {:mvn/version "1.1.0"} #_"Config loading"
   com.taoensso/timbre {:mvn/version "4.10.0"} #_"Logging"
-  cheshire {:mvn/version "5.8.1"} #_"JSON lib dep from timbre"
 
   org.clojure/core.async {:mvn/version "0.4.500"} #_"Async operations"
 
   org.clojure/data.json {:mvn/version "0.2.6"} #_"JSON lib"
+  cheshire {:mvn/version "5.8.1"} #_"Other JSON lib"
 
   clj-commons/iapetos {:mvn/version "0.1.9"} #_"Prometheus metrics"
 
   uswitch/opencensus-clojure {:mvn/version "0.2.84"} #_"Jaeger tracing"
+
+  manifold {:mvn/version "0.1.8"} #_"Stream utils"
+  aleph {:mvn/version "0.4.6"} #_"Async servers/clients" 
  }
  :aliases {
    :jar {:extra-deps {luchiniatwork/cambada {:mvn/version "1.0.0"}}
