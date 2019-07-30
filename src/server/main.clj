@@ -6,6 +6,7 @@
   (:require [iapetos.core :as prometheus]
             [iapetos.collector.ring :as ring-prom])
   (:require [taoensso.timbre :as log])
+  (:require [environ.core :refer [env]])
 
   (:use [server.ws] :reload)
   (:use [server.api] :reload)
@@ -30,4 +31,4 @@
       ( -> #'routes
           (ring-prom/wrap-metrics registry {:path "/metrics"})
           (wrap-reload))
-      {:port 8080})))
+      {:port (Integer/valueOf (env :port "8080"))})))
