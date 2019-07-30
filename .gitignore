@@ -3,6 +3,4 @@ pom.xml
 *.swp
 *~
 .cpcache
-.nightlight.edn
-resources/public/js
 out

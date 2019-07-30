@@ -1,21 +1,26 @@
 {:paths ["src" "resources"]
  :deps 
  {
-  org.clojure/clojure {:mvn/version "1.9.0"} 
+  org.clojure/clojure {:mvn/version "1.10.1"} 
 
-  ring {:mvn/version "1.7.0"} #_"HTTP Abstraction"
-  metosin/reitit {:mvn/version "0.2.10"} #_"Routing"
+  ring/ring-core {:mvn/version "1.7.1"} #_"HTTP Abstraction"
+  ring/ring-devel {:mvn/version "1.7.1"} #_"HTTP Abstraction"
+
+  metosin/reitit-core {:mvn/version "0.3.9"} #_"Routing core"
+  metosin/reitit-ring {:mvn/version "0.3.9"} #_"Routing ring adapter"
+
   http-kit {:mvn/version "2.3.0"} #_"HTTP Server and Client, incl. websockets"
-  hiccup {:mvn/version "1.0.5"}  #_"HTML generation for CLJ"
 
   environ {:mvn/version "1.1.0"} #_"Config loading"
   com.taoensso/timbre {:mvn/version "4.10.0"} #_"Logging"
 
-  org.clojure/core.async {:mvn/version "0.4.474"} #_"Async operations"
+  org.clojure/core.async {:mvn/version "0.4.500"} #_"Async operations"
 
-  org.clojure/clojurescript {:mvn/version "1.10.439"}  #_"ClojureScript core"
-  reagent {:mvn/version "0.8.1"}  #_"React binding for CLJS"
-  garden {:mvn/version "1.3.6"} #_"CSS generation for CLJ"
+  org.clojure/data.json {:mvn/version "0.2.6"} #_"JSON lib"
+
+  clj-commons/iapetos {:mvn/version "0.1.9"} #_"Prometheus metrics"
+
+  uswitch/opencensus-clojure {:mvn/version "0.2.84"} #_"Jaeger tracing"
  }
  :aliases {
    :jar {:extra-deps {luchiniatwork/cambada {:mvn/version "1.0.0"}}
@@ -25,28 +30,8 @@
              :main-opts ["-m" "cambada.uberjar" 
                          "-a" "all"
                          "-m" "server.main"]}
-   :nightlight {:extra-deps {nightlight {:mvn/version "2.3.2"}}
-                :main-opts ["-m" "nightlight.core"]}
-   :liquid {:extra-deps {mogenslund/liquid {:mvn/version "1.0.0"}}
-            :main-opts ["-m" "dk.salza.liq.core"]}
    :run {:main-opts ["-m" "server.main"]}
    :repl {:main-opts ["--repl"]}
-   :cljs-prod {:main-opts ["-m" "cljs.main"
-                           "--optimizations" "advanced"
-                           "--output-dir" "resources/public/js"
-                           "--compile" "client.main"]}
-   :cljs-repl {:main-opts ["-m" "cljs.main"
-                           "-co" "dev.cljs.edn"
-                           "-ro" "repl.cljs.edn"
-                           "--compile" "client.main"
-                           "--repl"
-                          ]}
-   :cljs-dev {:main-opts ["-m" "cljs.main"
-                          "--watch" "src/client"
-                          "--output-dir" "resources/public/js"
-                          "-co" "dev.cljs.edn"
-                          "--compile" "client.main"
-                          ]}
  }
  :mvn/repos
     {"central" {:url "https://repo1.maven.org/maven2/"}

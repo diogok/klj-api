@@ -1,4 +1,4 @@
-(ns server.socket
+(ns server.ws
   (:require [taoensso.timbre :as log])
   (:use [org.httpkit.server :only [send! with-channel on-close on-receive]]))
 
@@ -9,7 +9,7 @@
   [ch] (fn [data] 
          (log/spy (send! ch data))))
 
-(defn socket
+(defn ws
   [req] 
    (with-channel req channel
      (on-close channel (close-fn channel))
