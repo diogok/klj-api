@@ -21,7 +21,8 @@
   cheshire {:mvn/version "5.8.1"} #_"Other JSON lib"
 
   clj-commons/iapetos {:mvn/version "0.1.9"} #_"Prometheus metrics"
-
+  io.prometheus/simpleclient_hotspot {:mvn/version "0.6.0"} #_"Needed for JVM metrics"
+ 
   uswitch/opencensus-clojure {:mvn/version "0.2.84"} #_"Jaeger tracing"
 
   manifold {:mvn/version "0.1.8"} #_"Stream utils"

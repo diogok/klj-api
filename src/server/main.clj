@@ -5,7 +5,8 @@
             [ring.middleware.reload :refer [wrap-reload]]
             [ring.logger :refer [wrap-log-response]])
   (:require [iapetos.core :as prometheus]
-            [iapetos.collector.ring :refer [wrap-metrics initialize]])
+            [iapetos.collector.jvm :as prom-jvm]
+            [iapetos.collector.ring :as prom-ring :refer [wrap-metrics]])
   (:require [taoensso.timbre :as log])
   (:require [environ.core :refer [env]])
   (:require [opencensus-clojure.ring.middleware :refer [wrap-tracing]])
@@ -15,13 +16,14 @@
             [aleph.udp :as udp])
   (:require [cheshire.core :as json])
 
-  (:require [server.api :as api] :reload) #_"Your API go here"
+  (:require [server.api :as api] :reload)
   
   (:gen-class))
 
 (defonce registry
   (-> (prometheus/collector-registry)
-      (initialize)))
+      (prom-jvm/initialize)
+      (prom-ring/initialize)))
 
 (def routes
   (ring/ring-handler
@@ -44,6 +46,8 @@
              :stacktrace (:?err data)
              :hostname (force (:hostname_ data))
              :message (force (:msg_ data))
+             :application (env :app "app")
+             :app_version (env :app-version "dev")
              "@timestamp" (:instant data)}))
 
 (defn logstash-appender
