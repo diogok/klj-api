@@ -10,7 +10,7 @@ COPY deps.edn /usr/src/app/deps.edn
 RUN clj -e :ok
 
 # build
-COPY . /usr/src/app
+COPY src/ /usr/src/app/src
 RUN clj -A:uberjar
 
 # use clean image
