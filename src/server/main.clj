@@ -1,6 +1,7 @@
 (ns server.main
   (:require [org.httpkit.server :refer [run-server]]
             [reitit.ring :as ring]
+            [reitit.core :as r]
             [ring.util.response :refer [redirect response]]
             [ring.middleware.reload :refer [wrap-reload]]
             [ring.logger :refer [wrap-log-response]])
@@ -25,9 +26,11 @@
       (prom-jvm/initialize)
       (prom-ring/initialize)))
 
+(def router
+  (ring/router api/routes))
+
 (def routes
-  (ring/ring-handler
-    (ring/router api/routes)))
+  (ring/ring-handler router))
 
 (defn ring-logger-fn
   [{:keys [level throwable message]}]
@@ -35,6 +38,14 @@
 
 (defn tracing-fn [req] 
   (-> req :uri (str/replace #"/" "_")))
+
+(defn metric-path-fn
+  [req] 
+  (->>
+    req
+    (:uri)
+    (r/match-by-path router)
+    (:template)))
 
 (defn log-line
   [data]
@@ -74,7 +85,7 @@
   (log/spy
     (run-server 
       (-> #'routes
-          (wrap-metrics registry {:path "/metrics"})
+          (wrap-metrics registry {:path "/metrics" :path-fn metric-path-fn})
           (wrap-log-response {:log-fn ring-logger-fn})
           (wrap-tracing tracing-fn)
           (wrap-reload))
