@@ -36,8 +36,10 @@
   [{:keys [level throwable message]}]
     (log/info level throwable message))
 
-(defn tracing-fn [req] 
-  (-> req :uri (str/replace #"/" "_")))
+(defn tracing-fn [req]
+  (if-let [route (r/match-by-path router (req :uri))]
+    (:template route)
+    (:uri req)))
 
 (defn metric-path-fn
   [req] 
