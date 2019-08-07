@@ -18,4 +18,4 @@ FROM openjdk:11
 
 COPY --from=builder /usr/src/app/target/app-1.0.0-SNAPSHOT-standalone.jar /usr/src/app/app.jar
 
-CMD ["java","-jar","/usr/src/app/app.jar"]
+CMD ["java","-XX:+UseContainerSupport","-XX:MaxRAMPercentage=90","-jar","/usr/src/app/app.jar"]
