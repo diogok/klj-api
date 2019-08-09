@@ -3,10 +3,8 @@
             [reitit.ring :as ring]
             [reitit.core :as r]
             [ring.util.response :refer [redirect response]]
-            [ring.middleware.reload :refer [wrap-reload]]
             [ring.logger :refer [wrap-log-response]])
   (:require [iapetos.core :as prometheus]
-            [iapetos.collector.jvm :as prom-jvm]
             [iapetos.collector.ring :as prom-ring :refer [wrap-metrics]])
   (:require [taoensso.timbre :as log])
   (:require [environ.core :refer [env]])
@@ -17,13 +15,14 @@
             [aleph.udp :as udp])
   (:require [cheshire.core :as json])
 
-  (:require [server.api :as api] :reload)
+  (:require [server.api :as api])
   
   (:gen-class))
 
+(set! *warn-on-reflection* true)
+
 (defonce registry
   (-> (prometheus/collector-registry)
-      (prom-jvm/initialize)
       (prom-ring/initialize)))
 
 (def router
@@ -71,7 +70,7 @@
     :fn (fn [data]
           (s/put! @conn
             {:host (env :log-host "logstash")
-             :port (Integer/valueOf (env :log-port "5432"))
+             :port (Integer/valueOf ^String (env :log-port "5432"))
              :message (json/generate-string (log-line data))}))
    }))
 
@@ -86,9 +85,8 @@
 
   (log/spy
     (run-server 
-      (-> #'routes
+      (-> routes
           (wrap-metrics registry {:path "/metrics" :path-fn metric-path-fn})
           (wrap-log-response {:log-fn ring-logger-fn})
-          (wrap-tracing tracing-fn)
-          (wrap-reload))
-      {:port (Integer/valueOf (env :port "8080"))})))
+          (wrap-tracing tracing-fn))
+      {:port (Integer/valueOf ^String (env :port "8080"))})))

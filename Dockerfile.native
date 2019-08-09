@@ -1,0 +1,33 @@
+FROM clojure:openjdk-8-tools-deps as builder
+
+WORKDIR /usr/src/app
+
+# install cambada builder
+RUN clj -Sdeps '{:deps {luchiniatwork/cambada {:mvn/version "1.0.0"}}}' -e :ok 
+
+# install main deps
+COPY deps.edn /usr/src/app/deps.edn
+RUN clj -e :ok
+
+# build
+COPY src/ /usr/src/app/src
+RUN clj -A:uberjar
+
+# compile to native
+FROM oracle/graalvm-ce:19.1.1 as native
+
+RUN gu install native-image
+
+WORKDIR /usr/src/app
+
+COPY --from=builder /usr/src/app/target/app-1.0.0-SNAPSHOT-standalone.jar /usr/src/app
+
+RUN native-image --enable-http --static --no-fallback --initialize-at-build-time --no-server --report-unsupported-elements-at-runtime -jar app-1.0.0-SNAPSHOT-standalone.jar app
+
+# use clean image
+#FROM scratch
+
+#COPY --from=native /usr/src/app/app /app
+
+#CMD ["/app"]
+
