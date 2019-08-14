@@ -5,17 +5,25 @@
             [ring.util.response :refer [redirect response]]
             [ring.middleware.reload :refer [wrap-reload]]
             [ring.logger :refer [wrap-log-response]])
+
+  (:require [clojure.string :as str])
+
+  (:require [cheshire.core :as json])
+
   (:require [iapetos.core :as prometheus]
             [iapetos.collector.jvm :as prom-jvm]
             [iapetos.collector.ring :as prom-ring :refer [wrap-metrics]])
+
   (:require [taoensso.timbre :as log])
+
   (:require [environ.core :refer [env]])
+
   (:require [opencensus-clojure.ring.middleware :refer [wrap-tracing]])
-  (:require [clojure.string :as str])
+
+  (:require [sentry-clj.core :as sentry])
 
   (:require [manifold.stream :as s]
             [aleph.udp :as udp])
-  (:require [cheshire.core :as json])
 
   (:require [server.api :as api] :reload)
   
@@ -75,6 +83,19 @@
              :message (json/generate-string (log-line data))}))
    }))
 
+(defn wrap-sentry
+  [handler]
+   (fn [req]
+     (try 
+       (handler req)
+       (catch Exception e
+         (do
+           (sentry/send-event {:throwable e
+                               :environment (env :env "dev")
+                               :release (env :version "dev")})
+           {:status 500 :body (json/generate-string {:ok false})})
+         ))))
+
 (defn -main
   [& args] 
   #_(opencensus-clojure.reporting.jaeger/report "http://localhost:14268/api/traces" "my-service-name")
@@ -84,11 +105,15 @@
       {:appenders
         {:logstash (logstash-appender)}}))
 
+  (if-let [sentry-dsn (env :sentry)]
+    (sentry/init! sentry-dsn))
+
   (log/spy
     (run-server 
       (-> #'routes
-          (wrap-metrics registry {:path "/metrics" :path-fn metric-path-fn})
+          (wrap-sentry)
           (wrap-log-response {:log-fn ring-logger-fn})
           (wrap-tracing tracing-fn)
+          (wrap-metrics registry {:path "/metrics" :path-fn metric-path-fn})
           (wrap-reload))
       {:port (Integer/valueOf (env :port "8080"))})))

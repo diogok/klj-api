@@ -5,7 +5,7 @@
 
   ring/ring-core {:mvn/version "1.7.1"} #_"HTTP Abstraction"
   ring/ring-devel {:mvn/version "1.7.1"} #_"HTTP Abstraction Dev tools"
-  ring-logger {:mvn/version "1.0.1"} 
+  ring-logger {:mvn/version "1.0.1"}  #_"To log request/response"
 
   metosin/reitit-core {:mvn/version "0.3.9"} #_"Routing core"
   metosin/reitit-ring {:mvn/version "0.3.9"} #_"Routing ring adapter"
@@ -24,6 +24,8 @@
   io.prometheus/simpleclient_hotspot {:mvn/version "0.6.0"} #_"Needed for JVM metrics"
  
   uswitch/opencensus-clojure {:mvn/version "0.2.84"} #_"Jaeger tracing"
+  
+  io.sentry/sentry-clj {:mvn/version "0.7.2"} #_"Sentry for Exception reporting"
 
   manifold {:mvn/version "0.1.8"} #_"Stream utils"
   aleph {:mvn/version "0.4.6"} #_"Async servers/clients" 
