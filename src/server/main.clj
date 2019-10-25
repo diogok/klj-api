@@ -1,5 +1,5 @@
 (ns server.main
-  (:require [org.httpkit.server :refer [run-server]]
+  (:require [aleph.http :refer [start-server]]
             [reitit.ring :as ring]
             [reitit.core :as r]
             [ring.util.response :refer [redirect response]]
@@ -109,7 +109,7 @@
     (sentry/init! sentry-dsn))
 
   (log/spy
-    (run-server 
+    (start-server 
       (-> #'routes
           (wrap-sentry)
           (wrap-log-response {:log-fn ring-logger-fn})
