@@ -9,6 +9,7 @@
  metosin/reitit-core {:mvn/version "0.3.10"} #_"Routing core"
  metosin/reitit-ring {:mvn/version "0.3.10"} #_"Routing ring adapter"
  
+ cheshire {:mvn/version "5.8.1"} #_"JSON lib"
  
  #_"Fixed versions for usage with graalvm"
  io.netty/netty-codec-http {:mvn/version "4.1.39.Final"}

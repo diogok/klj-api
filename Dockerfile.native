@@ -22,12 +22,11 @@ WORKDIR /usr/src/app
 
 COPY --from=builder /usr/src/app/target/app-1.0.0-SNAPSHOT-standalone.jar /usr/src/app
 
-RUN native-image --enable-http --static --no-fallback --initialize-at-build-time --no-server --report-unsupported-elements-at-runtime -jar app-1.0.0-SNAPSHOT-standalone.jar app
+RUN native-image --allow-incomplete-classpath --static --enable-http --no-fallback  --no-server --initialize-at-build-time --report-unsupported-elements-at-runtime  --initialize-at-run-time=io.netty.channel.epoll.EpollEventArray,io.netty.channel.unix.Errors,io.netty.channel.unix.IovArray,io.netty.channel.unix.Socket,io.netty.channel.epoll.Native,io.netty.channel.epoll.EpollEventLoop,io.netty.util.internal.logging.Log4JLogger -jar app.jar app
 
 # use clean image
-#FROM scratch
+FROM scratch
 
-#COPY --from=native /usr/src/app/app /app
+COPY --from=native /usr/src/app/app /app
 
-#CMD ["/app"]
-
+CMD ["/app"]
