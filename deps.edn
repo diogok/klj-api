@@ -9,6 +9,8 @@
  metosin/reitit-core {:mvn/version "0.3.10"} #_"Routing core"
  metosin/reitit-ring {:mvn/version "0.3.10"} #_"Routing ring adapter"
  
+ environ {:mvn/version "1.1.0"} #_"Config loading"
+ 
  cheshire {:mvn/version "5.8.1"} #_"JSON lib"
  
  org.clojure/tools.logging {:mvn/version "0.5.0"} #_"Logging"

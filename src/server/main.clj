@@ -1,6 +1,7 @@
 (ns server.main
   (:require [aleph.http.server :refer [start-server]]
             [reitit.ring :as ring])
+  (:require [environ.core :refer [env]])
   (:require [clojure.tools.logging :as log]
             [ring.logger :refer [wrap-log-request-params
                                  wrap-log-request-start
@@ -27,4 +28,4 @@
        (wrap-log-response {:log-fn ring-log-fn})
        (wrap-log-request-params {:log-fn ring-log-fn})
        (wrap-log-request-start {:log-fn ring-log-fn})) 
-   {:port 8080}))
+   {:port (Integer/valueOf ^String (env :port "8080"))}))

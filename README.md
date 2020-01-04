@@ -10,6 +10,7 @@ Just to keep up to date with current frameworks.
 
 - Clojure 1.10
 - Dockerfile with multistage build
+- Dockerfile with with native-image using graalvm
 
 ### Utils
 
