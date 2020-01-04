@@ -1,4 +1,4 @@
-FROM clojure:openjdk-11-tools-deps as builder
+FROM clojure:openjdk-13-tools-deps-slim-buster as builder
 
 WORKDIR /usr/src/app
 
@@ -14,8 +14,11 @@ COPY src/ /usr/src/app/src
 RUN clj -A:uberjar
 
 # use clean image
-FROM openjdk:12
+FROM openjdk:13-slim-buster
+
+ENV PORT 8080
+EXPOSE 8080
 
 COPY --from=builder /usr/src/app/target/app-1.0.0-SNAPSHOT-standalone.jar /usr/src/app/app.jar
 
-CMD ["java","-XX:+UseContainerSupport","-XX:MaxRAMPercentage=90","-XX:+UnlockExperimentalVMOptions","-XX:+UseZGC","-jar","/usr/src/app/app.jar"]
+CMD ["java","-XX:+UseContainerSupport","-XX:MaxRAMPercentage=85","-XX:+UnlockExperimentalVMOptions","-XX:+UseZGC","-jar","/usr/src/app/app.jar"]

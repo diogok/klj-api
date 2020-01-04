@@ -1,30 +1,29 @@
 {:paths ["src" "resources"]
  :deps 
- {
-  org.clojure/clojure {:mvn/version "1.9.0"} 
+{
+ org.clojure/clojure {:mvn/version "1.10.1"} 
 
-  ring/ring-core {:mvn/version "1.7.1"} #_"HTTP Abstraction"
-  ring-logger {:mvn/version "1.0.1"} 
+ ring/ring-core {:mvn/version "1.8.0"} #_"HTTP Abstraction"
+ aleph {:mvn/version "0.4.7-alpha5"} #_"HTTP Server"
 
-  metosin/reitit-core {:mvn/version "0.3.9"} #_"Routing core"
-  metosin/reitit-ring {:mvn/version "0.3.9"} #_"Routing ring adapter"
-
-  http-kit {:mvn/version "2.3.0"} #_"HTTP Server and Client, incl. websockets"
-
-  environ {:mvn/version "1.1.0"} #_"Config loading"
-  com.taoensso/timbre {:mvn/version "4.10.0"} #_"Logging"
-
-  org.clojure/core.async {:mvn/version "0.4.500"} #_"Async operations"
-
-  org.clojure/data.json {:mvn/version "0.2.6"} #_"JSON lib"
-  cheshire {:mvn/version "5.8.1"} #_"Other JSON lib"
-
-  clj-commons/iapetos {:mvn/version "0.1.9"} #_"Prometheus metrics"
+ metosin/reitit-core {:mvn/version "0.3.10"} #_"Routing core"
+ metosin/reitit-ring {:mvn/version "0.3.10"} #_"Routing ring adapter"
  
-  uswitch/opencensus-clojure {:mvn/version "0.2.84"} #_"Jaeger tracing"
-
-  manifold {:mvn/version "0.1.8"} #_"Stream utils"
-  aleph {:mvn/version "0.4.6"} #_"Async servers/clients" 
+ 
+ #_"Fixed versions for usage with graalvm"
+ io.netty/netty-codec-http {:mvn/version "4.1.39.Final"}
+ io.netty/netty-codec {:mvn/version "4.1.39.Final"}
+ io.netty/netty-handler-proxy {:mvn/version "4.1.39.Final"}
+ io.netty/netty-codec-socks {:mvn/version "4.1.39.Final"}
+ io.netty/netty-handler {:mvn/version "4.1.39.Final"}
+ io.netty/netty-resolver-dns {:mvn/version "4.1.39.Final"}
+ io.netty/netty-codec-dns {:mvn/version "4.1.39.Final"}
+ io.netty/netty-resolver {:mvn/version "4.1.39.Final"}
+ io.netty/netty-transport-native-epoll {:mvn/version "4.1.39.Final"}
+ io.netty/netty-common {:mvn/version "4.1.39.Final"}
+ io.netty/netty-transport-native-unix-common {:mvn/version "4.1.39.Final"}
+ io.netty/netty-transport {:mvn/version "4.1.39.Final"}
+ io.netty/netty-buffer {:mvn/version "4.1.39.Final"}
  }
  :aliases {
    :jar {:extra-deps {luchiniatwork/cambada {:mvn/version "1.0.0"}}

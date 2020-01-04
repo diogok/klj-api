@@ -1,4 +1,4 @@
-FROM clojure:openjdk-8-tools-deps as builder
+FROM clojure:openjdk-11-tools-deps as builder
 
 WORKDIR /usr/src/app
 
@@ -14,7 +14,7 @@ COPY src/ /usr/src/app/src
 RUN clj -A:uberjar
 
 # compile to native
-FROM oracle/graalvm-ce:19.1.1 as native
+FROM oracle/graalvm-ce:19.3.0.2-java11 as native
 
 RUN gu install native-image
 

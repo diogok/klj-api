@@ -23,7 +23,7 @@ Just to keep up to date with current frameworks.
 ### HTTP
 
 - Ring
-- http-kit (http+websocket)
+- aleph (http+websocket)
 - reitit for routing
 
 ## Tasks

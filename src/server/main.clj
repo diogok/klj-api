@@ -1,29 +1,8 @@
 (ns server.main
-  (:require [org.httpkit.server :refer [run-server]]
-            [reitit.ring :as ring]
-            [reitit.core :as r]
-            [ring.util.response :refer [redirect response]]
-            [ring.logger :refer [wrap-log-response]])
-  (:require [iapetos.core :as prometheus]
-            [iapetos.collector.ring :as prom-ring :refer [wrap-metrics]])
-  (:require [taoensso.timbre :as log])
-  (:require [environ.core :refer [env]])
-  (:require [opencensus-clojure.ring.middleware :refer [wrap-tracing]])
-  (:require [clojure.string :as str])
-
-  (:require [manifold.stream :as s]
-            [aleph.udp :as udp])
-  (:require [cheshire.core :as json])
-
+  (:require [aleph.http.server :refer [start-server]]
+            [reitit.ring :as ring])
   (:require [server.api :as api])
-  
   (:gen-class))
-
-(set! *warn-on-reflection* true)
-
-(defonce registry
-  (-> (prometheus/collector-registry)
-      (prom-ring/initialize)))
 
 (def router
   (ring/router api/routes))
@@ -31,62 +10,7 @@
 (def routes
   (ring/ring-handler router))
 
-(defn ring-logger-fn
-  [{:keys [level throwable message]}]
-    (log/info level throwable message))
-
-(defn tracing-fn [req]
-  (if-let [route (r/match-by-path router (req :uri))]
-    (:template route)
-    (:uri req)))
-
-(defn metric-path-fn
-  [req] 
-  (->>
-    req
-    (:uri)
-    (r/match-by-path router)
-    (:template)))
-
-(defn log-line
-  [data]
-  (merge (:context data)
-            {:level (:level data)
-             :namespace (:?ns-str data)
-             :file (:?file data)
-             :line (:?line data)
-             :stacktrace (:?err data)
-             :hostname (force (:hostname_ data))
-             :message (force (:msg_ data))
-             :application (env :app "app")
-             :app_version (env :app-version "dev")
-             "@timestamp" (:instant data)}))
-
-(defn logstash-appender
-  [] 
-  (let [conn (udp/socket {})]
-   {:enabled? true
-    :async? false
-    :fn (fn [data]
-          (s/put! @conn
-            {:host (env :log-host "logstash")
-             :port (Integer/valueOf ^String (env :log-port "5432"))
-             :message (json/generate-string (log-line data))}))
-   }))
-
 (defn -main
-  [& args] 
-  #_(opencensus-clojure.reporting.jaeger/report "http://localhost:14268/api/traces" "my-service-name")
-
-  (if-let [logstash-host (env :log-host)]
-    (log/merge-config!
-      {:appenders
-        {:logstash (logstash-appender)}}))
-
-  (log/spy
-    (run-server 
-      (-> routes
-          (wrap-metrics registry {:path "/metrics" :path-fn metric-path-fn})
-          (wrap-log-response {:log-fn ring-logger-fn})
-          (wrap-tracing tracing-fn))
-      {:port (Integer/valueOf ^String (env :port "8080"))})))
+  [& args]
+  (println "starting")
+  (start-server routes {:port 8080}))
