@@ -11,6 +11,8 @@
  
  cheshire {:mvn/version "5.8.1"} #_"JSON lib"
  
+ org.clojure/tools.logging {:mvn/version "0.5.0"} #_"Logging"
+ 
  #_"Fixed versions for usage with graalvm"
  io.netty/netty-codec-http {:mvn/version "4.1.39.Final"}
  io.netty/netty-codec {:mvn/version "4.1.39.Final"}

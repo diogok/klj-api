@@ -1,6 +1,7 @@
 (ns server.main
   (:require [aleph.http.server :refer [start-server]]
             [reitit.ring :as ring])
+  (:require [clojure.tools.logging :as log])
   (:require [server.api :as api])
   (:gen-class))
 
@@ -12,5 +13,5 @@
 
 (defn -main
   [& args]
-  (println "starting")
+  (log/info "Starting server")
   (start-server routes {:port 8080}))
