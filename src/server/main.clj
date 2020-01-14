@@ -55,7 +55,7 @@
     (opencensus-clojure.trace/configure-tracer {:probability 1.0})
     (opencensus-clojure.trace/configure-tracer {:probability 0.0}))
   
-  (when (= "enabled" (env :trace-log "disabled"))
+  (when (= "enabled" (env :trace-log))
     (io.opencensus.exporter.trace.logging.LoggingTraceExporter/register))
 
   (if-let [jaeger-host (env :jaeger-host)]
