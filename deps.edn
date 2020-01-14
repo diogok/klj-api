@@ -1,50 +1,62 @@
 {:paths ["src" "resources"]
  :deps 
-{
- org.clojure/clojure {:mvn/version "1.10.1"} 
+ {org.clojure/clojure {:mvn/version "1.10.1"}
 
- ring/ring-core {:mvn/version "1.8.0"} #_"HTTP Abstraction"
- aleph {:mvn/version "0.4.7-alpha5"} #_"HTTP Server"
+  ring/ring-core {:mvn/version "1.8.0"} #_"HTTP Abstraction"
+  aleph {:mvn/version "0.4.7-alpha5"} #_"HTTP Server"
 
- metosin/reitit-core {:mvn/version "0.3.10"} #_"Routing core"
- metosin/reitit-ring {:mvn/version "0.3.10"} #_"Routing ring adapter"
- 
- environ {:mvn/version "1.1.0"} #_"Config loading"
- 
- cheshire {:mvn/version "5.8.1"} #_"JSON lib"
- 
- org.clojure/tools.logging {:mvn/version "0.5.0"} #_"Logging"
- ring-logger {:mvn/version "1.0.1"} #_"HTTP Logging"
- 
- clj-commons/iapetos {:mvn/version "0.1.9"} #_"Prometheus metrics"
- 
- #_"Fixed versions for usage with graalvm"
- io.netty/netty-codec-http {:mvn/version "4.1.39.Final"}
- io.netty/netty-codec {:mvn/version "4.1.39.Final"}
- io.netty/netty-handler-proxy {:mvn/version "4.1.39.Final"}
- io.netty/netty-codec-socks {:mvn/version "4.1.39.Final"}
- io.netty/netty-handler {:mvn/version "4.1.39.Final"}
- io.netty/netty-resolver-dns {:mvn/version "4.1.39.Final"}
- io.netty/netty-codec-dns {:mvn/version "4.1.39.Final"}
- io.netty/netty-resolver {:mvn/version "4.1.39.Final"}
- io.netty/netty-transport-native-epoll {:mvn/version "4.1.39.Final"}
- io.netty/netty-common {:mvn/version "4.1.39.Final"}
- io.netty/netty-transport-native-unix-common {:mvn/version "4.1.39.Final"}
- io.netty/netty-transport {:mvn/version "4.1.39.Final"}
- io.netty/netty-buffer {:mvn/version "4.1.39.Final"}
- }
+  metosin/reitit-core {:mvn/version "0.3.10"} #_"Routing core"
+  metosin/reitit-ring {:mvn/version "0.3.10"} #_"Routing ring adapter"
+
+  environ {:mvn/version "1.1.0"} #_"Config loading"
+
+  cheshire {:mvn/version "5.8.1"} #_"JSON lib"
+
+  log4j {:mvn/version "1.2.16"} #_"Logging"
+  org.slf4j/slf4j-log4j12 {:mvn/version "1.7.30"} #_"Logging"
+  org.clojure/tools.logging {:mvn/version "0.5.0"} #_"Logging"
+  ring-logger {:mvn/version "1.0.1"} #_"HTTP Logging"
+
+  clj-commons/iapetos {:mvn/version "0.1.9"} #_"Prometheus metrics"
+  #_io.prometheus/simpleclient_hotspot #_{:mvn/version "0.6.0"} #_"Needed for JVM metrics"
+
+  uswitch/opencensus-clojure {:mvn/version "0.2.84"} #_"Open tracing"
+
+  io.opencensus/opencensus-exporter-trace-zipkin {:mvn/version "0.24.0"} #_"Tracing to zipkin"
+  io.opencensus/opencensus-exporter-trace-jaeger {:mvn/version "0.24.0"}  #_"Tracing to jaeger"
+  io.opencensus/opencensus-exporter-trace-logging {:mvn/version "0.24.0"} #_"Tracing to logging"
+
+  #_"Fixed versions for usage with graalvm"
+  io.netty/netty-codec-http {:mvn/version "4.1.39.Final"}
+  io.netty/netty-codec {:mvn/version "4.1.39.Final"}
+  io.netty/netty-handler-proxy {:mvn/version "4.1.39.Final"}
+  io.netty/netty-codec-socks {:mvn/version "4.1.39.Final"}
+  io.netty/netty-handler {:mvn/version "4.1.39.Final"}
+  io.netty/netty-resolver-dns {:mvn/version "4.1.39.Final"}
+  io.netty/netty-codec-dns {:mvn/version "4.1.39.Final"}
+  io.netty/netty-resolver {:mvn/version "4.1.39.Final"}
+  io.netty/netty-transport-native-epoll {:mvn/version "4.1.39.Final"}
+  io.netty/netty-common {:mvn/version "4.1.39.Final"}
+  io.netty/netty-transport-native-unix-common {:mvn/version "4.1.39.Final"}
+  io.netty/netty-transport {:mvn/version "4.1.39.Final"}
+  io.netty/netty-buffer {:mvn/version "4.1.39.Final"}
+  }
  :aliases {
-   :jar {:extra-deps {luchiniatwork/cambada {:mvn/version "1.0.0"}}
-             :main-opts ["-m" "cambada.jar" 
-                         "-m" "server.main"]}
-   :uberjar {:extra-deps {luchiniatwork/cambada {:mvn/version "1.0.0"}}
-             :main-opts ["-m" "cambada.uberjar" 
-                         "-a" "all"
-                         "-m" "server.main"]}
-   :run {:main-opts ["-m" "server.main"]}
-   :repl {:main-opts ["--repl"]}
- }
+           :jar {:extra-deps {luchiniatwork/cambada {:mvn/version "1.0.0"}}
+                 :main-opts ["-m" "cambada.jar" 
+                             "-m" "server.main"]}
+           :uberjar {:extra-deps {luchiniatwork/cambada {:mvn/version "1.0.0"}}
+                     :main-opts ["-m" "cambada.uberjar" 
+                                 "-a" "all"
+                                 "-m" "server.main"]}
+           :run {:main-opts ["-m" "server.main"]}
+           :repl {:main-opts ["--repl"]}
+           :graph {:extra-deps {org.clojure/tools.deps.graph {:mvn/version "0.2.24"}}
+                   :main-opts ["-m" "clojure.tools.deps.graph"]}
+           :ancient   {:main-opts  ["-m" "deps-ancient.deps-ancient"]
+                       :extra-deps {deps-ancient {:mvn/version "RELEASE"}}}
+           }
  :mvn/repos
-    {"central" {:url "https://repo1.maven.org/maven2/"}
-     "clojars" {:url "https://clojars.org/repo"}}
-}
+ {"central" {:url "https://repo1.maven.org/maven2/"}
+  "clojars" {:url "https://clojars.org/repo"}}
+ }
