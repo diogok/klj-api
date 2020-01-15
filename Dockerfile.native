@@ -1,0 +1,35 @@
+FROM clojure:openjdk-11-tools-deps as builder
+
+WORKDIR /usr/src/app
+
+# install cambada builder
+RUN clj -Sdeps '{:deps {luchiniatwork/cambada {:mvn/version "1.0.0"}}}' -e :ok 
+
+# install main deps
+COPY deps.edn /usr/src/app/deps.edn
+RUN clj -e :ok
+
+# copy needed resources
+COPY resources/ /usr/src/app/resources
+COPY src/ /usr/src/app/src
+
+# build
+RUN clj -A:uberjar
+
+# compile to native
+FROM oracle/graalvm-ce:19.3.1-java11 as native
+
+RUN gu install native-image
+
+WORKDIR /usr/src/app
+
+COPY --from=builder /usr/src/app/target/app-1.0.0-SNAPSHOT-standalone.jar /usr/src/app/app.jar
+
+RUN native-image --allow-incomplete-classpath --static --enable-http --no-fallback  --no-server --initialize-at-build-time --report-unsupported-elements-at-runtime  --initialize-at-run-time=io.netty.channel.epoll.EpollEventArray,io.netty.channel.unix.Errors,io.netty.channel.unix.IovArray,io.netty.channel.unix.Socket,io.netty.channel.epoll.Native,io.netty.channel.epoll.EpollEventLoop,io.netty.util.internal.logging.Log4JLogger -jar app.jar app
+
+# use clean image
+FROM scratch
+
+COPY --from=native /usr/src/app/app /app
+
+CMD ["/app"]

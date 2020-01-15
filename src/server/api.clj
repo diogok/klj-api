@@ -1,19 +1,17 @@
 
 (ns server.api
-  (:require [cheshire.core :as json])
-  (:use [server.ws] :reload))
+  (:require [cheshire.core :as json]))
 
-(defn health 
+(defn health
   [_]
     {:headers {"Content-Type" "application/json; charset=utf-8"}
       :body (json/generate-string {:ok true})})
 
-(defn hello 
+(defn hello
   [req]
-    {:headers {"Content-Type" "application/json; charset=utf-8"}
-      :body (json/generate-string {:hello (:me (:path-params req))})})
+  {:headers {"Content-Type" "application/json; charset=utf-8"}
+   :body (json/generate-string {:hello (:me (:path-params req))})})
 
 (def routes
   [["/health" {:get {:handler health}}]
-   ["/hello/:me" {:get {:handler hello}}]
-   ["/ws" {:get {:handler ws}}]])
+   ["/hello/:me" {:get {:handler hello}}]])

@@ -10,6 +10,7 @@ COPY deps.edn /usr/src/app/deps.edn
 RUN clj -e :ok
 
 # build
+COPY resources/ /usr/src/app/resources
 COPY src/ /usr/src/app/src
 RUN clj -A:uberjar
 
