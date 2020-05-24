@@ -8,9 +8,9 @@
   metosin/reitit-core {:mvn/version "0.5.1"} #_"Routing core"
   metosin/reitit-ring {:mvn/version "0.5.1"} #_"Routing ring adapter"
 
-  environ {:mvn/version "1.1.0"} #_"Config loading"
+  environ {:mvn/version "1.2.0"} #_"Config loading"
 
-  cheshire {:mvn/version "5.8.1"} #_"JSON lib"
+  cheshire {:mvn/version "5.10.0"} #_"JSON lib"
 
   log4j {:mvn/version "1.2.17"} #_"Logging"
   org.slf4j/slf4j-log4j12 {:mvn/version "1.7.30"} #_"Logging"
@@ -20,13 +20,13 @@
   clj-commons/iapetos {:mvn/version "0.1.9"} #_"Prometheus metrics"
   #_io.prometheus/simpleclient_hotspot #_{:mvn/version "0.6.0"} #_"Needed for JVM metrics"
 
-  uswitch/opencensus-clojure {:mvn/version "0.2.84"} #_"Open tracing"
+  uswitch/opencensus-clojure {:mvn/version "0.2.93"} #_"Open tracing"
 
   io.opencensus/opencensus-exporter-trace-zipkin {:mvn/version "0.24.0"} #_"Tracing to zipkin"
   io.opencensus/opencensus-exporter-trace-jaeger {:mvn/version "0.24.0"}  #_"Tracing to jaeger"
   io.opencensus/opencensus-exporter-trace-logging {:mvn/version "0.24.0"} #_"Tracing to logging"
   }
- :aliases {:uberjar {:extra-deps {luchiniatwork/cambada {:mvn/version "1.0.0"}}
+ :aliases {:uberjar {:extra-deps {luchiniatwork/cambada {:mvn/version "1.0.2"}}
                      :main-opts ["-m" "cambada.uberjar"
                                  "-a" "all"
                                  "-m" "demo.main"]}

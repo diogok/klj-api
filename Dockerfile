@@ -3,7 +3,7 @@ FROM clojure:openjdk-14-tools-deps-slim-buster as builder
 WORKDIR /usr/src/app
 
 # install cambada builder
-RUN clj -Sdeps '{:deps {luchiniatwork/cambada {:mvn/version "1.0.0"}}}' -e :ok 
+RUN clj -Sdeps '{:deps {luchiniatwork/cambada {:mvn/version "1.0.2"}}}' -e :ok
 
 # install main deps
 COPY deps.edn /usr/src/app/deps.edn
