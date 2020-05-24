@@ -4,6 +4,8 @@
   
   (:gen-class))
 
+(def router (kapi/make-router api/routes))
+
 (defn -main
   [& _]
-  (kapi/start-server api/routes))
+  (kapi/start-server router))

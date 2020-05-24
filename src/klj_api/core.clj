@@ -14,7 +14,8 @@
             #_[iapetos.collector.jvm :as prom-jvm]
             [iapetos.collector.ring :as prom-ring :refer [wrap-metrics]])
 
-  (:require [opencensus-clojure.ring.middleware :refer [wrap-tracing]])
+  (:require [opencensus-clojure.ring.middleware :refer [wrap-tracing]]
+            [opencensus-clojure.trace :refer [configure-tracer]])
 
   (:gen-class))
 
@@ -49,8 +50,8 @@
   []
 
   (if (= "enabled" (env :tracing))
-    (opencensus-clojure.trace/configure-tracer {:probability 1.0})
-    (opencensus-clojure.trace/configure-tracer {:probability 0.0}))
+    (configure-tracer {:probability 1.0})
+    (configure-tracer {:probability 0.0}))
 
   (when (= "enabled" (env :trace-log))
     (io.opencensus.exporter.trace.logging.LoggingTraceExporter/register))
@@ -71,15 +72,16 @@
   (fn [request]
     (handler (assoc request :context context))))
 
+(def make-router ring/router)
+
 (defn start-server
   "Start server for the routes and blocks"
-  [routes]
+  [router]
   (log/info "Starting server")
   (setup-tracing)
-  (let [router  (ring/router routes)
-        handler (ring/ring-handler router)]
-   (run-jetty
-    (-> handler
+  (run-jetty
+    (->
+        (ring/ring-handler router)
         (wrap-context {:metrics-registy metric-registry
                        :router router})
         (wrap-metrics metric-registry {:path "/metrics" :path-fn (partial path-fn router)})
@@ -87,4 +89,4 @@
         (wrap-log-response {:log-fn ring-log-fn})
         (wrap-log-request-params {:log-fn ring-log-fn})
         (wrap-log-request-start {:log-fn ring-log-fn}))
-     {:port (Integer/valueOf ^String (env :port "8080"))})))
+     {:port (Integer/valueOf ^String (env :port "8080"))}))
