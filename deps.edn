@@ -2,8 +2,8 @@
  :deps 
  {org.clojure/clojure {:mvn/version "1.10.1"}
 
-  ring/ring-core {:mvn/version "1.8.0"} #_"HTTP Abstraction"
-  aleph {:mvn/version "0.4.7-alpha5"} #_"HTTP Server"
+  ring/ring-core {:mvn/version "1.8.1"} #_"HTTP Abstraction"
+  ring/ring-jetty-adapter {:mvn/version "1.8.1"} #_"Jetty webserver"
 
   metosin/reitit-core {:mvn/version "0.3.10"} #_"Routing core"
   metosin/reitit-ring {:mvn/version "0.3.10"} #_"Routing ring adapter"
@@ -25,21 +25,6 @@
   io.opencensus/opencensus-exporter-trace-zipkin {:mvn/version "0.24.0"} #_"Tracing to zipkin"
   io.opencensus/opencensus-exporter-trace-jaeger {:mvn/version "0.24.0"}  #_"Tracing to jaeger"
   io.opencensus/opencensus-exporter-trace-logging {:mvn/version "0.24.0"} #_"Tracing to logging"
-
-  #_"Fixed versions for usage with graalvm"
-  io.netty/netty-codec-http {:mvn/version "4.1.39.Final"}
-  io.netty/netty-codec {:mvn/version "4.1.39.Final"}
-  io.netty/netty-handler-proxy {:mvn/version "4.1.39.Final"}
-  io.netty/netty-codec-socks {:mvn/version "4.1.39.Final"}
-  io.netty/netty-handler {:mvn/version "4.1.39.Final"}
-  io.netty/netty-resolver-dns {:mvn/version "4.1.39.Final"}
-  io.netty/netty-codec-dns {:mvn/version "4.1.39.Final"}
-  io.netty/netty-resolver {:mvn/version "4.1.39.Final"}
-  io.netty/netty-transport-native-epoll {:mvn/version "4.1.39.Final"}
-  io.netty/netty-common {:mvn/version "4.1.39.Final"}
-  io.netty/netty-transport-native-unix-common {:mvn/version "4.1.39.Final"}
-  io.netty/netty-transport {:mvn/version "4.1.39.Final"}
-  io.netty/netty-buffer {:mvn/version "4.1.39.Final"}
   }
  :aliases {
            :jar {:extra-deps {luchiniatwork/cambada {:mvn/version "1.0.0"}}

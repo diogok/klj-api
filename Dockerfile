@@ -1,4 +1,4 @@
-FROM clojure:openjdk-13-tools-deps-slim-buster as builder
+FROM clojure:openjdk-14-tools-deps-slim-buster as builder
 
 WORKDIR /usr/src/app
 

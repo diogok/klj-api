@@ -38,7 +38,7 @@ A few notes on non production or limited environments:
 ### HTTP
 
 - Ring
-- aleph (http)
+- jetty (http)
 - reitit for routing
 - cheshire for json
 

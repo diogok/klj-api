@@ -1,5 +1,5 @@
 (ns server.main
-  (:require [aleph.http.server :refer [start-server]]
+  (:require [ring.adapter.jetty :refer [run-jetty]]
             [reitit.ring :as ring]
             [reitit.core :as r])
   
@@ -72,7 +72,7 @@
   [& args]
   (log/info "Starting server")
   (setup-tracing)
-  (start-server 
+  (run-jetty
    (-> routes
        (wrap-metrics metric-registry {:path "/metrics" :path-fn path-fn})
        (wrap-tracing path-fn)
