@@ -1,5 +1,5 @@
 
-(ns server.api
+(ns demo.api
   (:require [cheshire.core :as json]))
 
 (defn health
