@@ -5,16 +5,16 @@
   ring/ring-core {:mvn/version "1.8.1"} #_"HTTP Abstraction"
   ring/ring-jetty-adapter {:mvn/version "1.8.1"} #_"Jetty webserver"
 
-  metosin/reitit-core {:mvn/version "0.5.1"} #_"Routing core"
-  metosin/reitit-ring {:mvn/version "0.5.1"} #_"Routing ring adapter"
+  metosin/reitit-core {:mvn/version "0.3.10"} #_"Routing core"
+  metosin/reitit-ring {:mvn/version "0.3.10"} #_"Routing ring adapter"
 
   environ {:mvn/version "1.1.0"} #_"Config loading"
 
   cheshire {:mvn/version "5.8.1"} #_"JSON lib"
 
-  log4j {:mvn/version "1.2.17"} #_"Logging"
+  log4j {:mvn/version "1.2.16"} #_"Logging"
   org.slf4j/slf4j-log4j12 {:mvn/version "1.7.30"} #_"Logging"
-  org.clojure/tools.logging {:mvn/version "1.1.0"} #_"Logging"
+  org.clojure/tools.logging {:mvn/version "0.5.0"} #_"Logging"
   ring-logger {:mvn/version "1.0.1"} #_"HTTP Logging"
 
   clj-commons/iapetos {:mvn/version "0.1.9"} #_"Prometheus metrics"
