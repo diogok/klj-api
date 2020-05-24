@@ -12,7 +12,7 @@ Just to keep up to date with current frameworks.
 - Dockerfile with multistage build
 - Dockerfile with with native-image using graalvm
 
-The docker image use openjdk 13 with ZGC for low latency GC set to 85% of RAM available to the container.
+The docker image use openjdk 14 with ZGC for low latency GC set to 85% of RAM available to the container.
 
 The native docker image uses graalvm with Java 11, and has minimal size.
 
@@ -20,12 +20,11 @@ The native docker image uses graalvm with Java 11, and has minimal size.
 
 A few notes on non production or limited environments:
 
-- Java docker image comes at 430MB and native image at 27MB
-- Initial memory usage of java is at 150MB while native is at 4MB
+- Java docker image comes at 430MB and native image at 23MB
+- Initial memory usage of java is at 150MB while native is at 3MB
 - After load memory usage was similar, with native usig about 10% more memory
-- Throughput and latency were not properly tested
-- I believe Java will be better at handling higher loads, based on readings
-- Native is likely leaking memory, but I did not observe long enough
+- Under load, the java version handler more requests
+- The benchmark was very limited
 - Tracing is not working on native
 
 ### Utils
